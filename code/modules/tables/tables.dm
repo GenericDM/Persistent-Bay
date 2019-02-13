@@ -24,7 +24,7 @@
 	// Convert if/when you can easily get stacks of these.
 	var/carpeted = 0
 
-	var/list/connections = list("nw0", "ne0", "sw0", "se0")
+	connections = list("nw0", "ne0", "sw0", "se0")
 
 /obj/structure/table/New()
 	if(istext(material))
@@ -108,13 +108,13 @@
 	if(carpeted && isCrowbar(W))
 		user.visible_message("<span class='notice'>\The [user] removes the carpet from \the [src].</span>",
 		                              "<span class='notice'>You remove the carpet from \the [src].</span>")
-		new /obj/item/stack/tile/carpet(loc)
+		new /obj/item/stack/tile/carpetgreen(loc)
 		carpeted = 0
 		update_icon()
 		return 1
 
-	if(!carpeted && material && istype(W, /obj/item/stack/tile/carpet))
-		var/obj/item/stack/tile/carpet/C = W
+	if(!carpeted && material && istype(W, /obj/item/stack/tile/carpetgreen))
+		var/obj/item/stack/tile/carpetgreen/C = W
 		if(C.use(1))
 			user.visible_message("<span class='notice'>\The [user] adds \the [C] to \the [src].</span>",
 			                              "<span class='notice'>You add \the [C] to \the [src].</span>")
@@ -285,11 +285,11 @@
 			S = material.place_shard(loc)
 			if(S) shards += S
 	if(carpeted && (full_return || prob(50))) // Higher chance to get the carpet back intact, since there's no non-intact option
-		new /obj/item/stack/tile/carpet(src.loc)
+		new /obj/item/stack/tile/carpetgreen(src.loc)
 	if(full_return || prob(20))
 		new /obj/item/stack/material/steel(src.loc)
 	else
-		var/material/M = SSmaterials.get_material_by_name(DEFAULT_WALL_MATERIAL)
+		var/material/M = SSmaterials.get_material_by_name(MATERIAL_STEEL)
 		S = M.place_shard(loc)
 		if(S) shards += S
 	qdel(src)
@@ -367,7 +367,7 @@
 	return TRUE
 
 // set propagate if you're updating a table that should update tables around it too, for example if it's a new table or something important has changed (like material).
-/obj/structure/table/proc/update_connections(propagate=0)
+/obj/structure/table/update_connections(propagate=0)
 	if(!material)
 		connections = list("0", "0", "0", "0")
 

@@ -5,7 +5,7 @@
  */
 
 /obj/item/device/debugger
-	name = "debugger"
+	name = "software hack detector"
 	desc = "Used to debug electronic equipment."
 	icon = 'icons/obj/hacktool.dmi'
 	icon_state = "hacktool-g"
@@ -15,9 +15,9 @@
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
-	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
+	desc = "You can use this on machines to ckeck for software hacks."
 
-	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 20)
+	matter = list(MATERIAL_STEEL = 50,MATERIAL_GLASS = 20)
 
 	origin_tech = list(TECH_MAGNET = 1, TECH_ENGINEERING = 1)
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage

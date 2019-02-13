@@ -133,6 +133,13 @@
 	M.sleeping = 0
 	M.jitteriness = 0
 
+/datum/reagent/toxin/lead
+	name = "lead"
+	description = "Lead is a dense, soft, dull metal that is known to be toxic while easy to work with."
+	taste_description = "sweet" // Lead used to be used as a sweatener by the Romans(?) as they didn't know how toxic it was
+	reagent_state = SOLID
+	color = "#6d6a65"
+
 /datum/reagent/gold
 	name = "Gold"
 	description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
@@ -303,7 +310,7 @@
 /datum/reagent/silicate
 	name = "Silicate"
 	description = "A compound that can be used to reinforce glass."
-	taste_description = "plastic"
+	taste_description = MATERIAL_PLASTIC
 	reagent_state = LIQUID
 	color = "#c7ffff"
 

@@ -27,6 +27,7 @@ var/list/possible_cable_coil_colours
 /obj/structure/cable
 	level = 1
 	anchored =1
+	dir = SOUTH
 	var/datum/powernet/powernet
 	name = "power cable"
 	desc = "A flexible superconducting cable for heavy-duty power transfer."
@@ -485,7 +486,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 5
-	matter = list("copper" = 20)
+	matter = list(MATERIAL_COPPER = 20)
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_BELT
 	item_state = "coil"

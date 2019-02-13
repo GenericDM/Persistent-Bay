@@ -11,6 +11,8 @@
 	icon_state = "cortical-stack"
 	default_language = LANGUAGE_GALCOM
 
+	var/teleport_time = 0 // time when you can teleport back to nexus
+
 /mob/living/carbon/lace/New()
 	container = loc
 	var/datum/action/lace/laceaction = new(container)
@@ -62,13 +64,10 @@
 	if (istype(other, /mob/living/carbon/slime))
 		return 1
 	return ..()
-/mob/living/carbon/lace/update_canmove()
+
+/mob/living/carbon/lace/UpdateLyingBuckledAndVerbStatus()
 	if(in_contents_of(/obj/mecha) || istype(loc, /obj/item/device/lmi))
-		canmove = 1
 		use_me = 1
-	else
-		canmove = 0
-	return canmove
 
 /mob/living/carbon/lace/isSynthetic()
 	return 0

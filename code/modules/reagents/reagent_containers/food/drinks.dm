@@ -265,11 +265,11 @@
 	center_of_mass = "x=16;y=9"
 	filling_states = "15;30;50;70;85;100"
 	base_icon = "pitcher"
-	matter = list(DEFAULT_WALL_MATERIAL = 100)
+	matter = list(MATERIAL_STEEL = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
-	name = "\improper Captain's flask"
-	desc = "A metal flask belonging to the captain."
+	name = "\improper fancy flask"
+	desc = "A metal flask."
 	icon_state = "flask"
 	volume = 60
 	center_of_mass = "x=17;y=7"
@@ -285,8 +285,8 @@
 	icon_state = "lithiumflask"
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/detflask
-	name = "\improper Detective's flask"
-	desc = "A metal flask with a leather band and golden badge belonging to the detective."
+	name = "\improper classy flask"
+	desc = "A metal flask with a leather band and golden badge."
 	icon_state = "detflask"
 	volume = 60
 	center_of_mass = "x=17;y=8"
@@ -315,7 +315,7 @@
 	filling_states = "40;80;100"
 	base_name = "cup"
 	base_icon = "coffeecup"
-	matter = list(DEFAULT_WALL_MATERIAL = 60)
+	matter = list(MATERIAL_STEEL = 60)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffeecup/black
 	name = "black coffee cup"

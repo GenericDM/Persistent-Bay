@@ -17,7 +17,7 @@
 
 /obj/item/weapon/gun/projectile/sec
 	name = ".45 pistol"
-	desc = "The NT Mk58 is a cheap, ubiquitous sidearm, produced by a Nanotrasen subsidiary. Found pretty much everywhere humans are. Uses .45 rounds."
+	desc = "The NT Mk58 is a cheap, ubiquitous sidearm, produced by a Nanotrasen for use in the frontier. Found everywhere in the frontier. Uses .45 rounds."
 	icon_state = "secguncomp"
 	magazine_type = /obj/item/ammo_magazine/c45m/flash
 	allowed_magazines = /obj/item/ammo_magazine/c45m
@@ -58,7 +58,7 @@
 	load_method = MAGAZINE
 	magazine_type = /obj/item/ammo_magazine/c45m
 	allowed_magazines = /obj/item/ammo_magazine/c45m
-/*
+
 /obj/item/weapon/gun/projectile/magnum_pistol
 	name = ".50 magnum pistol"
 	desc = "A robust handgun that uses .50 AE ammo."
@@ -96,7 +96,7 @@
 		icon_state = "gyropistolloaded"
 	else
 		icon_state = "gyropistol"
-*/
+
 /obj/item/weapon/gun/projectile/pistol
 	name = "holdout pistol"
 	desc = "The Lumoco Arms P3 Whisper. A small, easily concealable gun. Uses 9mm rounds."

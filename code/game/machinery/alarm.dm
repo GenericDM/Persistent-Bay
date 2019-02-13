@@ -117,8 +117,8 @@
 	if(istype(frame))
 		buildstage = 0
 		wiresexposed = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -21 : 21)
+		pixel_y = (dir & 3)? (dir ==1 ? -21 : 21) : 0
 		update_icon()
 		frame.transfer_fingerprints_to(src)
 
@@ -137,6 +137,7 @@
 	set_frequency(frequency)
 	if (!master_is_operating())
 		elect_master()
+	update_icon()
 
 /obj/machinery/alarm/Initialize()
 	. = ..()
@@ -165,6 +166,8 @@
 	set_frequency(frequency)
 	if (!master_is_operating())
 		elect_master()
+
+	update_icon()
 
 /obj/machinery/alarm/Process()
 	if((stat & (NOPOWER|BROKEN)) || shorted || buildstage != 2)
@@ -345,6 +348,19 @@
 		if (2)
 			icon_state = "alarm1"
 			new_color = COLOR_RED_LIGHT
+
+	pixel_x = 0
+	pixel_y = 0
+	var/turf/T = get_step(get_turf(src), turn(dir, 180))
+	if(istype(T) && T.density)
+		if(dir == NORTH)
+			pixel_y = -21
+		else if(dir == SOUTH)
+			pixel_y = 21
+		else if(dir == WEST)
+			pixel_x = 21
+		else if(dir == EAST)
+			pixel_x = -21
 
 	set_light(l_range = 2, l_power = 0.6, l_color = new_color)
 
@@ -894,7 +910,7 @@ Just a object used in constructing air alarms
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
 	w_class = ITEM_SIZE_SMALL
-	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
+	matter = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 
 /*
 FIRE ALARM
@@ -919,13 +935,43 @@ FIRE ALARM
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 	var/seclevel
 
+/obj/machinery/firealarm/New(var/loc, var/dir, atom/frame)
+	..(loc)
+
+	if(dir)
+		src.set_dir(dir)
+
+	if(istype(frame))
+		buildstage = 0
+		wiresexposed = 1
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -21 : 21)
+		pixel_y = (dir & 3)? (dir ==1 ? -21 : 21) : 0
+		update_icon()
+		frame.transfer_fingerprints_to(src)
+
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..(user)
 	var/decl/security_state/security_state = decls_repository.get_decl(GLOB.using_map.security_state)
 	to_chat(user, "The current alert level is [security_state.current_security_level.name].")
 
+/obj/machinery/firealarm/Initialize()
+	. = ..()
+	update_icon()
+
 /obj/machinery/firealarm/update_icon()
 	overlays.Cut()
+
+	var/walldir = (dir & (NORTH|SOUTH)) ? GLOB.reverse_dir[dir] : dir
+	var/turf/T = get_step(get_turf(src), walldir)
+	if(istype(T) && T.density)
+		if(dir == SOUTH)
+			pixel_y = 21
+		else if(dir == NORTH)
+			pixel_y = -21
+		else if(dir == EAST)
+			pixel_x = 21
+		else if(dir == WEST)
+			pixel_x = -21
 
 	if(wiresexposed)
 		switch(buildstage)
@@ -1152,8 +1198,8 @@ FIRE ALARM
 	if(istype(frame))
 		buildstage = 0
 		wiresexposed = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -21 : 21)
+		pixel_y = (dir & 3)? (dir ==1 ? -21 : 21) : 0
 		frame.transfer_fingerprints_to(src)
 
 /obj/machinery/firealarm/Initialize()
@@ -1171,7 +1217,7 @@ Just a object used in constructing fire alarms
 	icon_state = "door_electronics"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\"."
 	w_class = ITEM_SIZE_SMALL
-	matter = list(DEFAULT_WALL_MATERIAL = 50, "glass" = 50)
+	matter = list(MATERIAL_STEEL = 50, MATERIAL_GLASS = 50)
 
 /* // Refactor Topic Here Before Uncommenting
 /obj/machinery/partyalarm

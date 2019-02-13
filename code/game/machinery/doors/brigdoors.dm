@@ -101,8 +101,8 @@
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)	continue
 		if(C.opened && !C.close())	continue
-		C.locked = 1
-		C.icon_state = C.icon_locked
+		C.locked = TRUE
+		C.queue_icon_update()
 	return 1
 
 
@@ -125,7 +125,7 @@
 		if(C.broken)	continue
 		if(C.opened)	continue
 		C.locked = 0
-		C.icon_state = C.icon_closed
+		C.queue_icon_update()
 
 	return 1
 
@@ -200,7 +200,7 @@
 
 
 /obj/machinery/door_timer/tg_ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = tgui_process.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "brig_timer", name , 300, 150, master_ui, state)
 		ui.open()

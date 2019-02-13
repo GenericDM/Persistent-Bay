@@ -110,7 +110,7 @@ obj/machinery/resleever/Process()
 
 
 /obj/machinery/resleever/tg_ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = tgui_process.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "resleever", "Neural Lace Resleever", 300, 300, master_ui, state)
 		ui.open()
@@ -198,6 +198,9 @@ obj/machinery/resleever/Process()
 			to_chat(user, "<span class='warning'>You need to remove the occupant first!</span>")
 			return
 	if(istype(W, /obj/item/organ/internal/stack))
+		if(istype(W, /obj/item/organ/internal/stack/vat))
+			to_chat(user, "<span class='warning'>[W] does not fit into [src], and you get the horrifying feeling that it was not meant to.</span>")
+			return
 		if(isnull(lace))
 			to_chat(user, "<span class='notice'>You insert \the [W] into [src].</span>")
 			user.drop_from_inventory(W)

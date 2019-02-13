@@ -236,7 +236,7 @@
 					/obj/item/clothing/ring/material/gold,
 					/obj/item/clothing/ring/material/silver,
 					/obj/item/clothing/accessory/locket,
-					/obj/item/clothing/accessory/black/expensive,
+					/obj/item/clothing/accessory/black,
 					/obj/item/clothing/accessory/scarf,
 					/obj/item/clothing/head/crown,
 					/obj/item/clothing/mask/smokable/pipe
@@ -474,3 +474,9 @@
 	contains = list(/obj/item/device/violin)
 	cost = 40
 	containername = "violin crate"
+
+/decl/hierarchy/supply_pack/nonessent/canvases
+	name = "Recreation - Canvases"
+	contains = list(/obj/item/canvas = 10)
+	cost = 15
+	containername = "canvases crate"

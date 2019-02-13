@@ -97,6 +97,9 @@
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 1
 
+/obj/item/clothing/head/helmet/thunderdome/costume
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
@@ -105,6 +108,9 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|BLOCKHAIR
 	body_parts_covered = HEAD|FACE
 	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/gladiator/costume
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /*
 /obj/item/clothing/head/helmet/tactical
@@ -169,3 +175,10 @@
 	name = "bundeforz tactical helmet"
 	desc = "A light grey helmet made from advanced ceramic. Comfortable and robust."
 	icon_state = "m_helmet"
+
+/obj/item/clothing/head/helmet/guard
+	name = "guard helmet"
+	desc = "A royal blue helmet designed for both ceremonial and practical use."
+	icon_state = "helmet_guard"
+	armor = list(melee = 50, bullet = 60, laser = 60, energy = 45, bomb = 30, bio = 0, rad = 0)
+	siemens_coefficient = 0.6

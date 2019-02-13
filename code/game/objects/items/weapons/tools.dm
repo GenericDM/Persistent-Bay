@@ -196,7 +196,7 @@
 /obj/item/weapon/weldingtool/examine(mob/user)
 	if(..(user, 0))
 		if(tank)
-			to_chat(user, "\icon[tank] \The [tank] contains [get_fuel()]/[tank.max_fuel] units of fuel!")
+			to_chat(user, "<span class='notice'>\icon[tank] \The [tank] contains [get_fuel()]/[tank.max_fuel] units of fuel!</span>")
 		else
 			to_chat(user, "There is no tank attached.")
 
@@ -484,6 +484,10 @@
 
 	. = ..()
 
+/obj/item/weapon/welder_tank/examine(mob/user)
+	if(..(user, 0))
+		to_chat(user, "<span class='notice'>There is [reagents.total_volume]/[max_fuel] units of fuel remaining.</span>")
+
 /obj/item/weapon/welder_tank/afterattack(obj/O as obj, mob/user as mob, proximity)
 	if(!proximity) return
 	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1)
@@ -662,9 +666,9 @@
  */
 
 
-/*/obj/item/weapon/combitool
+/obj/item/weapon/combitool
 	name = "combi-tool"
-	desc = "It even has one of those nubbins for doing the thingy."
+	desc = "The second best tool for every handyman."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combitool"
 	w_class = ITEM_SIZE_SMALL
@@ -718,4 +722,4 @@
 	if(!resolved && tool && target)
 		tool.afterattack(target,user,1)
 	if(tool)
-		tool.loc = src*/
+		tool.loc = src

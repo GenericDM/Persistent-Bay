@@ -1,7 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 #define ACCESS_BUSINESS_ELETRONICS "Electronics Control"
-#define ACCESS_BUSINESS_DEFAULT_ALL list(ACCESS_BUSINESS_ELETRONICS,"Sales", "Budget View", "Employee Control", "Upper Management", "Door Access 1", "Door Access 2", "Door Access 3")
-
+#define ACCESS_BUSINESS_DEFAULT_ALL list(ACCESS_BUSINESS_ELETRONICS,"Sales", "Newsfeed", "Budget View", "Employee Control",  "Upper Management", "Door Access 1", "Door Access 2", "Door Access 3")
 
 /obj/item/weapon/airlock_electronics/business
 	name = "business airlock electronics"
@@ -9,7 +8,7 @@
 	icon_state = "door_electronics"
 	w_class = ITEM_SIZE_SMALL //It should be tiny! -Agouri
 	desc = "airlock electronics that connect to business networks"
-	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 50)
+	matter = list(MATERIAL_STEEL = 50,MATERIAL_GLASS = 50)
 
 	req_access = list()
 
@@ -96,7 +95,7 @@
 	icon_state = "door_electronics"
 	w_class = ITEM_SIZE_SMALL //It should be tiny! -Agouri
 
-	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 50)
+	matter = list(MATERIAL_STEEL = 50,MATERIAL_GLASS = 50)
 
 	req_access = list(core_access_door_configuration)
 
@@ -122,7 +121,7 @@
 /obj/item/weapon/airlock_electronics/tg_ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 	datum/tgui/master_ui = null, datum/ui_state/state = tg_hands_state)
 
-	tgui_process.try_update_ui(user, src, ui_key, ui, force_open)
+	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "airlock_electronics", src.name, 1000, 500, master_ui, state)
 		ui.open()
@@ -216,15 +215,40 @@
 	lockable = 0
 
 /obj/item/weapon/airlock_electronics/brace/tg_ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = tg_deep_inventory_state)
-	tgui_process.try_update_ui(user, src, ui_key, ui, force_open)
+	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "airlock_electronics", src.name, 1000, 500, master_ui, state)
 		ui.open()
 
 /obj/item/weapon/airlock_electronics/keypad_electronics
  	name = "keypad airlock electronics"
- 	icon = 'icons/obj/doors/door_assembly.dmi'
  	icon_state = "door_electronics_keypad"
- 	w_class = 2 //It should be tiny! -Agouri
  	desc = "An upgraded version airlock electronics board, with a keypad to lock the door."
- 	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 50)
+
+/obj/item/weapon/airlock_electronics/personal_electronics
+ 	name = "personal airlock electronics"
+ 	desc = "An alternative to airlock electronics that locks access to specific personnel"
+ 										// 1 in list controls door bolting
+ 	var/list/registered_names = list()	// all others can open the door as normal
+
+/obj/item/weapon/airlock_electronics/personal_electronics/attackby(var/obj/item/I, var/mob/user)
+	if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/ID = I
+
+		if(ID.registered_name in registered_names)
+			return
+
+		if(!registered_names.len)
+			to_chat(user, "You set [ID.registered_name] as \the [src]' owner.")
+		else
+			to_chat(user, "You add [ID.registered_name] to \the [src]' allowed access list.")
+
+		registered_names += ID.registered_name
+
+ 	if(isMultitool(I))
+ 		registered_names.Cut()
+
+ 		to_chat(user, "You pulse \the [src], resetting the allowed access list.")
+
+/obj/item/weapon/airlock_electronics/attack_self()
+	return

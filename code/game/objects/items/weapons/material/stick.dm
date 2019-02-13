@@ -1,12 +1,12 @@
 /obj/item/weapon/material/stick
-	name = "stick"
+	name = "staff"
 	desc = "You feel the urge to poke someone with this."
 	icon_state = "stick"
 	item_state = "stickmat"
 	force_divisor = 0.1
 	thrown_force_divisor = 0.1
 	w_class = ITEM_SIZE_NORMAL
-	default_material = "wood"
+	default_material = MATERIAL_WOOD
 	attack_verb = list("poked", "jabbed")
 
 

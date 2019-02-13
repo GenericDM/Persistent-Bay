@@ -5,7 +5,10 @@
 
 	//Mining resources (for the large drills).
 	var/has_resources
+	var/has_gas_resources
+
 	var/list/resources
+	var/list/gas_resources
 
 	var/thermite = 0
 	initial_gas = list("oxygen" = MOLES_O2STANDARD, "nitrogen" = MOLES_N2STANDARD)
@@ -95,7 +98,7 @@
 			if(H.shoes)
 				var/obj/item/clothing/shoes/S = H.shoes
 				if(istype(S))
-					S.handle_movement(src,(H.m_intent == "run" ? 1 : 0))
+					S.handle_movement(src, MOVING_QUICKLY(H))
 					if(S.track_blood && S.blood_DNA)
 						bloodDNA = S.blood_DNA
 						bloodcolor=S.blood_color
@@ -116,7 +119,7 @@
 
 		if(src.wet)
 
-			if(M.buckled || (M.m_intent == "walk" && prob(min(100, 100/(wet/10))) ) )
+			if(M.buckled || (MOVING_DELIBERATELY(M) && prob(min(100, 100/(wet/10))) ) )
 				return
 
 			var/slip_dist = 1

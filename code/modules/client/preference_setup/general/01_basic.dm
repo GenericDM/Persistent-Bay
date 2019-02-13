@@ -35,11 +35,18 @@ datum/preferences
 	pref.spawnpoint         = sanitize_inlist(pref.spawnpoint, spawntypes(), initial(pref.spawnpoint))
 	pref.be_random_name     = 0
 
+/datum/category_item/player_setup_item/general/basic/proc/has_flag(var/datum/species/mob_species, var/flag)
+	return mob_species && (mob_species.appearance_flags & flag)
+
 /datum/category_item/player_setup_item/general/basic/content()
+	var/datum/species/mob_species = all_species[pref.species]
 	. = list()
 	. += "* = Required Field<br><br>"
 	. += "<b>*Full Name:</b> "
-	. += "<a href='?src=\ref[src];rename=1'><b>[pref.real_name ? pref.real_name : "Unset*"]</b></a><br>"
+	if(has_flag(mob_species, IS_VATGROWN))
+		. += "<a href='?src=\ref[src];random_name=1'>Random Name</A><br>"
+	else
+		. += "<a href='?src=\ref[src];rename=1'><b>[pref.real_name ? pref.real_name : "Unset*"]</b></a><br>"
 //	. += "<a href='?src=\ref[src];always_random_name=1'>Always Random Name: [pref.be_random_name ? "Yes" : "No"]</a>"
 	. += "<br>"
 	. += "<b>Gender:</b> <a href='?src=\ref[src];gender=1'><b>[gender2text(pref.gender)]</b></a><br>"
@@ -56,6 +63,9 @@ datum/preferences
 		if (!isnull(raw_name) && CanUseTopic(user))
 			var/new_name = sanitize_name(raw_name, pref.species)
 			if(new_name)
+				if(Retrieve_Record(new_name))
+					to_chat(user, "<span class='warning'>Invalid name. This character already exists.</span>")
+					return TOPIC_NOACTION
 				pref.real_name = new_name
 				return TOPIC_REFRESH
 			else

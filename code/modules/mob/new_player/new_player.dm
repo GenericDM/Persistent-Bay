@@ -14,8 +14,8 @@
 
 	density = 0
 	stat = DEAD
-	canmove = 0
 
+	movement_handlers = list()
 	anchored = 1	//  don't get pushed around
 
 	virtual_mob = null // Hear no evil, speak no evil
@@ -32,7 +32,7 @@
 	var/output = "<div align='center'><hr><br>"
 	output += "<a href='byond://?src=\ref[src];createCharacter=1'>Create A New Character</a><br><br>"
 
-	if(ticker?.current_state <= GAME_STATE_PREGAME)
+	if(GAME_STATE < RUNLEVEL_GAME)
 		output += "<span class='average'><b>The Game Is Loading!</b></span><br><br>"
 	else
 		output += "<a href='byond://?src=\ref[src];joinGame=1'>Join Game!</a><br><br>"
@@ -129,7 +129,7 @@
 			chosen_slot = M.save_slot
 			to_chat(src, "<span class='notice'>A character is already in game.</span>")
 			Retrieve_Record(M.real_name)
-			if(ticker.current_state > GAME_STATE_PREGAME)
+			if(GAME_STATE == RUNLEVEL_GAME)
 				panel?.close()
 				load_panel?.close()
 				M.key = key
@@ -229,7 +229,7 @@
 
 	if(character.spawn_type == 1)
 		var/datum/world_faction/faction = get_faction(character.spawn_loc)
-		var/assignmentSpawnLocation = faction?.get_assignment(faction?.get_record(character.real_name)?.assignment_uid)?.cryo_net
+		var/assignmentSpawnLocation = faction?.get_assignment(faction?.get_record(character.real_name)?.assignment_uid, character.real_name)?.cryo_net
 		if (assignmentSpawnLocation == "Last Known Cryonet")
 			// The character's assignment is set to spawn in their last cryo location
 			// Do nothing, leave it the way it is.
@@ -294,7 +294,7 @@
 	character.key = key
 	character.save_slot = chosen_slot
 
-	ticker.minds |= character.mind
+	GLOB.minds |= character.mind
 	character.redraw_inv()
 	CreateModularRecord(character)
 	character.finishLoadCharacter()	// This is ran because new_players don't like to stick around long.
@@ -302,22 +302,23 @@
 
 /mob/proc/finishLoadCharacter()
 	if(spawn_type == 2)
-		var/obj/screen/cinematic
+		if(GLOB.using_map.intro_icon)
+			var/obj/screen/cinematic
 
-		cinematic = new
-		cinematic.icon = 'icons/effects/gateway_intro.dmi'
-		cinematic.icon_state = "blank"
-		cinematic.plane = HUD_PLANE
-		cinematic.layer = HUD_ABOVE_ITEM_LAYER
-		cinematic.mouse_opacity = 2
-		cinematic.screen_loc = "WEST,SOUTH"
+			cinematic = new
+			cinematic.icon = GLOB.using_map.intro_icon
+			cinematic.icon_state = "blank"
+			cinematic.plane = HUD_PLANE
+			cinematic.layer = HUD_ABOVE_ITEM_LAYER
+			cinematic.mouse_opacity = 2
+			cinematic.screen_loc = "WEST,SOUTH"
 
-		if(client)
-			client.screen += cinematic
+			if(client)
+				client.screen += cinematic
 
-			flick("neurallaceboot",cinematic)
-			sleep(106)
-			client.screen -= cinematic
+				flick("cinematic",cinematic)
+				sleep(106)
+				client.screen -= cinematic
 
 		spawn_type = 1
 		sound_to(src, sound('sound/music/brandon_morris_loop.ogg', repeat = 0, wait = 0, volume = 85, channel = 1))
@@ -392,7 +393,7 @@ mob/new_player/MayRespawn()
 /mob/new_player/Stat()
 	. = ..()
 
-	if(statpanel("Lobby") && ticker)
+	if(statpanel("Lobby"))
 		stat("Players : [GLOB.player_list.len]")
 
 /mob/proc/after_spawn()

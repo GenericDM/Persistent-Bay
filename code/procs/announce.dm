@@ -83,11 +83,9 @@ datum/announcement/priority/FormMessage(message as text, message_title as text)
 	. += "<br>"
 
 datum/announcement/priority/command/FormMessage(message as text, message_title as text)
-	. = "<h1 class='alert'>[command_name()] Update</h1>"
 	if (message_title)
 		. += "<br><h2 class='alert'>[message_title]</h2>"
-
-	. += "<br><span class='alert'>[message]</span><br>"
+	. += "<br><span class='alert'>[message]</span>"
 	. += "<br>"
 
 datum/announcement/priority/security/FormMessage(message as text, message_title as text)
@@ -119,7 +117,7 @@ datum/announcement/proc/NewsCast(message as text, message_title as text)
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/datum/job/job, var/join_message)
 	if(!istype(job) || !job.announced)
 		return
-	if (ticker.current_state != GAME_STATE_PLAYING)
+	if (GAME_STATE != RUNLEVEL_GAME)
 		return
 	var/rank = job.title
 	if(character.mind.role_alt_title)

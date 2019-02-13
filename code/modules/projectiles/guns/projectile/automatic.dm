@@ -20,7 +20,7 @@
 		list(mode_name="3-round bursts", burst=3, fire_delay=null, move_delay=4,    one_hand_penalty=1, burst_accuracy=list(0,-1,-1),       dispersion=list(0.0, 0.6, 1.0), jam_chance=10),
 		list(mode_name="short bursts",   burst=5, fire_delay=null, move_delay=4,    one_hand_penalty=2, burst_accuracy=list(0,-1,-1,-1,-2), dispersion=list(0.6, 0.6, 1.0, 1.0, 1.2), jam_chance=15),
 		)
-/*
+
 /obj/item/weapon/gun/projectile/automatic/machine_pistol
 	name = ".45 machine pistol"
 	desc = "An uncommon machine pistol, sometimes refered to as an 'uzi' by the backwater spacers it is often associated with, though its origins have been lost to time. Uses .45 rounds."
@@ -82,7 +82,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/sts35
 	name = "assault rifle"
-	desc = "The rugged STS-35 is a durable automatic weapon of a make popular on the frontier worlds. The serial number has been scratched off. Uses 5.56mm rounds."
+	desc = "The rugged STS-35 is a durable automatic weapon of a make popular weapons of choice in frontier conflicts. Uses 5.56mm rounds."
 	icon_state = "arifle"
 	item_state = null
 	w_class = ITEM_SIZE_HUGE
@@ -107,7 +107,7 @@
 	icon_state = (ammo_magazine)? "arifle" : "arifle-empty"
 	wielded_item_state = (ammo_magazine)? "arifle-wielded" : "arifle-wielded-empty"
 	..()
-*/
+
 /obj/item/weapon/gun/projectile/automatic/wt550
 	name = "9mm machine pistol"
 	desc = "The W-T 550 Saber is a cheap self-defense weapon, mass-produced by Ward-Takahashi for paramilitary and private use. Uses 9mm rounds."
@@ -136,7 +136,7 @@
 	else
 		icon_state = "wt550"
 	return
-/*
+
 /obj/item/weapon/gun/projectile/automatic/z8
 	name = "bullpup assault rifle"
 	desc = "The Z8 Bulldog is an older model bullpup carbine, made by the now defunct Zendai Foundries. Uses armor piercing 7.62mm rounds. Makes you feel like a space marine when you hold it."
@@ -285,4 +285,4 @@
 		to_chat(user, "<span class='warning'>You need to open the cover to unload [src].</span>")
 		return
 	..()
-*/
+

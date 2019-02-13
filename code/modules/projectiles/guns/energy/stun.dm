@@ -10,6 +10,7 @@
 		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun),
 		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock),
 		)
+	load_method = ENERGY_LOAD_HOTSWAP_CELL
 
 /obj/item/weapon/gun/energy/taser/carbine
 	name = "taser carbine"
@@ -29,16 +30,19 @@
 		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun/heavy),
 		list(mode_name="shock", projectile_type=/obj/item/projectile/beam/stun/shock/heavy),
 		)
+	load_method = ENERGY_LOAD_HOTSWAP_CELL
 
 /obj/item/weapon/gun/energy/taser/mounted
 	name = "mounted taser gun"
 	self_recharge = 1
 	use_external_power = 1
+	load_method = ENERGY_LOAD_FIXED_CELL
 
 /obj/item/weapon/gun/energy/taser/mounted/cyborg
 	name = "taser gun"
 	max_shots = 6
 	recharge_time = 10 //Time it takes for shots to recharge (in ticks)
+	load_method = ENERGY_LOAD_FIXED_CELL
 
 
 /obj/item/weapon/gun/energy/stunrevolver
@@ -49,6 +53,7 @@
 	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3, TECH_POWER = 2)
 	projectile_type = /obj/item/projectile/energy/electrode
 	max_shots = 6
+	load_method = ENERGY_LOAD_FIXED_CELL
 
 /obj/item/weapon/gun/energy/stunrevolver/rifle
 	name = "stun rifle"
@@ -64,6 +69,7 @@
 	accuracy = 1
 	projectile_type = /obj/item/projectile/energy/electrode/stunshot
 	wielded_item_state = "stunrifle-wielded"
+	load_method = ENERGY_LOAD_FIXED_CELL
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "mini energy-crossbow"
@@ -72,7 +78,7 @@
 	w_class = ITEM_SIZE_NORMAL
 	item_state = "crossbow"
 	origin_tech = list(TECH_COMBAT = 2, TECH_MAGNET = 2, TECH_ILLEGAL = 5)
-	matter = list(DEFAULT_WALL_MATERIAL = 2000)
+	matter = list(MATERIAL_STEEL = 2000)
 	slot_flags = SLOT_BELT
 	silenced = 1
 	fire_sound = 'sound/weapons/Genhit.ogg'
@@ -80,6 +86,7 @@
 	max_shots = 8
 	self_recharge = 1
 	charge_meter = 0
+	load_method = ENERGY_LOAD_FIXED_CELL
 
 /obj/item/weapon/gun/energy/crossbow/ninja
 	name = "energy dart thrower"
@@ -92,7 +99,7 @@
 	w_class = ITEM_SIZE_LARGE
 	force = 10
 	one_hand_penalty = 1
-	matter = list(DEFAULT_WALL_MATERIAL = 200000)
+	matter = list(MATERIAL_STEEL = 200000)
 	projectile_type = /obj/item/projectile/energy/bolt/large
 
 /obj/item/weapon/gun/energy/plasmastun
@@ -104,3 +111,4 @@
 	fire_delay = 20
 	max_shots = 4
 	projectile_type = /obj/item/projectile/energy/plasmastun
+	load_method = ENERGY_LOAD_FIXED_CELL

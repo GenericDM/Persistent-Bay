@@ -202,6 +202,17 @@
 
 /obj/machinery/light/update_icon(var/trigger = 1)
 
+	pixel_y = 0
+	pixel_x = 0
+	var/turf/T = get_step(get_turf(src), src.dir)
+	if(istype(T, /turf/simulated/wall))
+		if(src.dir == NORTH)
+			pixel_y = 21
+		else if(src.dir == EAST)
+			pixel_x = 10
+		else if(src.dir == WEST)
+			pixel_x = -10
+
 	switch(get_status())		// set icon_states
 		if(LIGHT_OK)
 			icon_state = "[base_state][on]"
@@ -214,7 +225,6 @@
 		if(LIGHT_BROKEN)
 			icon_state = "[base_state]-broken"
 			on = 0
-
 	if(on)
 		use_power = 2
 
@@ -529,7 +539,7 @@
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	matter = list(DEFAULT_WALL_MATERIAL = 60)
+	matter = list(MATERIAL_STEEL = 60)
 	var/rigged = 0		// true if rigged to explode
 	var/broken_chance = 2
 
@@ -545,7 +555,7 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
-	matter = list("glass" = 100)
+	matter = list(MATERIAL_GLASS = 100)
 
 	brightness_range = 6	// luminosity when on, also used in power calculation
 	brightness_power = 3
@@ -604,7 +614,7 @@
 	base_state = "lbulb"
 	item_state = "contvapour"
 	broken_chance = 5
-	matter = list("glass" = 100)
+	matter = list(MATERIAL_GLASS = 100)
 
 	brightness_range = 4
 	brightness_power = 2
@@ -666,7 +676,7 @@
 	icon_state = "fbulb"
 	base_state = "fbulb"
 	item_state = "egg4"
-	matter = list("glass" = 100)
+	matter = list(MATERIAL_GLASS = 100)
 	brightness_range = 4
 	brightness_power = 2
 

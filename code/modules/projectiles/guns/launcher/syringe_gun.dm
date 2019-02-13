@@ -4,7 +4,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "syringe-cartridge"
 	var/icon_flight = "syringe-cartridge-flight" //so it doesn't look so weird when shot
-	matter = list(DEFAULT_WALL_MATERIAL = 125, "glass" = 375)
+	matter = list(MATERIAL_STEEL = 125, MATERIAL_GLASS = 375)
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 3
@@ -63,12 +63,12 @@
 
 /obj/item/weapon/gun/launcher/syringe
 	name = "syringe gun"
-	desc = "A spring loaded rifle designed to fit syringes, designed to incapacitate unruly patients from a distance."
+	desc = "A spring loaded rifle designed to fit syringe cartridges and to incapacitate unruly patients from a distance."
 	icon_state = "syringegun"
 	item_state = "syringegun"
 	w_class = ITEM_SIZE_LARGE
 	force = 7
-	matter = list(DEFAULT_WALL_MATERIAL = 2000)
+	matter = list(MATERIAL_STEEL = 2000)
 	slot_flags = SLOT_BELT
 
 	fire_sound = 'sound/weapons/empty.ogg'

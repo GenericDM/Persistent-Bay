@@ -95,9 +95,9 @@ proc/get_fusion_reaction(var/p_react, var/s_react, var/m_energy)
 	products = list("silicon"= 1)
 
 /decl/fusion_reaction/iron_iron
-	p_react = "iron"
-	s_react = "iron"
-	products = list("silver" = 1, "gold" = 1, "platinum" = 1) // Not realistic but w/e
+	p_react = MATERIAL_IRON
+	s_react = MATERIAL_IRON
+	products = list(MATERIAL_SILVER = 1, MATERIAL_GOLD = 1, MATERIAL_PLATINUM = 1) // Not realistic but w/e
 	energy_consumption = 10
 	energy_production = 0
 	instability = 2
@@ -131,7 +131,7 @@ proc/get_fusion_reaction(var/p_react, var/s_react, var/m_energy)
 	var/radiation_level = rand(100, 200)
 
 	// Copied from the SM for proof of concept. //Not any more --Cirra //Use the whole z proc --Leshana
-	radiation_repository.z_radiate(locate(1, 1, holder.z), radiation_level, 1)
+	SSradiation.z_radiate(locate(1, 1, holder.z), radiation_level, 1)
 
 	for(var/mob/living/mob in GLOB.living_mob_list_)
 		var/turf/T = get_turf(mob)

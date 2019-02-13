@@ -4,7 +4,6 @@ var/global/list/saved = list()
 var/global/list/areas_to_save = list()
 var/global/list/zones_to_save = list()
 var/global/list/debug_data = list()
-
 /proc/Prepare_Atmos_For_Saving()
 	for(var/datum/pipe_network/net in SSmachines.pipenets)
 		for(var/datum/pipeline/line in net.line_members)
@@ -85,6 +84,19 @@ var/global/list/debug_data = list()
 
 /datum/proc/before_load()
 	return
+
+
+/datum/chunk_holder/StandardRead(var/savefile/f)
+	..()
+	var/ve
+	while(!f.eof)
+		from_file(f, ve)
+
+/datum/chunk_holder/StandardWrite(var/savefile/f)
+	..()
+	for(var/x in turfs)
+		to_file(f, x)
+
 
 /turf/after_load()
 	..()
@@ -224,6 +236,14 @@ var/global/list/debug_data = list()
 		debug_data["[src.type]"] = list(1,(REALTIMEOFDAY - starttime)/10)
 
 /turf/StandardRead(var/savefile/f)
+	if(z == 2 && x == 21 && y == 87)
+		return
+	if(z == 2 && x == 22 && y == 87)
+		return
+	if(z == 2 && x == 23 && y == 87)
+		return
+	if(z == 2 && x == 24 && y == 87)
+		return
 	var/starttime = REALTIMEOFDAY
 	map_storage_loaded = 1
 	before_load()
@@ -279,18 +299,21 @@ var/global/list/debug_data = list()
 /area/Read(savefile/f)
 	return 0
 
+/datum/chunk_holder
+	var/list/turfs = list()
+
 /proc/Save_Chunk(var/xi, var/yi, var/zi, var/savefile/f)
 	var/z = zi
-	xi = (xi - (xi % 20) + 1)
-	yi = (yi - (yi % 20) + 1)
-	var/list/lis = list()
-	for(var/y in yi to yi + 20)
-		for(var/x in xi to xi + 20)
+	xi = (xi - (xi % 16) + 1)
+	yi = (yi - (yi % 16) + 1)
+	var/datum/chunk_holder/holder = new()
+	for(var/y in yi to yi + 16)
+		for(var/x in xi to xi + 16)
 			var/turf/T = locate(x,y,z)
 			if(!T || ((T.type == /turf/space || T.type == /turf/simulated/open) && (!T.contents || !T.contents.len)))
 				continue
-			lis |= T
-	to_file(f,lis)
+			holder.turfs |= T
+	to_file(f,holder)
 
 /proc/Save_Records(var/backup_dir)
 	for(var/datum/computer_file/crew_record/L in GLOB.all_crew_records)
@@ -313,6 +336,11 @@ var/global/list/debug_data = list()
 			var/savefile/fa = new("record_saves/[key2].sav")
 			to_file(fa, L)
 			to_file(fa, L.linked_account)
+		var/key3 = L.get_fingerprint()
+		fdel("record_saves/[key3].sav")
+		var/savefile/fe = new("record_saves/[key3].sav")
+		to_file(fe, L)
+		to_file(fe, L.linked_account)
 
 
 	for(var/datum/world_faction/faction in GLOB.all_world_factions)
@@ -325,7 +353,8 @@ var/global/list/debug_data = list()
 			to_file(f, L)
 
 /proc/Save_World()
-	to_world("<font size=4 color='green'>The world is saving! You won't be able to join at this time.</font>")
+	to_world("<font size=4 color='green'>The world is saving! Characters are frozen and you won't be able to join at this time.</font>")
+	sleep(20)
 	var/reallow = 0
 	if(config.enter_allowed) reallow = 1
 	config.enter_allowed = 0
@@ -342,14 +371,13 @@ var/global/list/debug_data = list()
 		else
 			backup = 1
 	found_vars = list()
-	for(var/z in 1 to 50)
+	for(var/z in 1 to 20)
 		fcopy("map_saves/z[z].sav", "backups/[dir]/z[z].sav")
 		fdel("map_saves/z[z].sav")
 		var/savefile/f = new("map_saves/z[z].sav")
-		for(var/x in 1 to world.maxx step 20)
-			for(var/y in 1 to world.maxy step 20)
-				Save_Chunk(x,y,z, f)
-				CHECK_TICK
+		for(var/x in 1 to world.maxx step 16)
+			for(var/y in 1 to world.maxy step 16)
+				Save_Chunk(x,y,z,f)
 		f = null
 	fcopy("map_saves/extras.sav", "backups/[dir]/extras.sav")
 	fdel("map_saves/extras.sav")
@@ -372,7 +400,6 @@ var/global/list/debug_data = list()
 	to_file(f["areas"],formatted_areas)
 	Save_Records(dir)
 
-//	to_file(f["records"],GLOB.all_crew_records)
 	to_file(f["next_account_number"],next_account_number)
 	if(reallow) config.enter_allowed = 1
 	to_world("Saving Completed in [(REALTIMEOFDAY - starttime)/10] seconds!")
@@ -432,7 +459,6 @@ var/global/list/debug_data = list()
 
 /proc/Load_World()
 	var/starttime = REALTIMEOFDAY
-	if(!fexists("map_saves/game.sav")) return
 	var/savefile/f = new("map_saves/extras.sav")
 	all_loaded = list()
 	found_vars = list()
@@ -459,23 +485,14 @@ var/global/list/debug_data = list()
 			turfs |= T
 		A.contents.Add(turfs)
 	f = null
-	for(var/z in 1 to 50)
-		f = new("map_saves/z[z].sav")
+	for(var/z in 1 to 20)
 		var/starttime2 = REALTIMEOFDAY
-		var/breakout = 0
-		while(!f.eof && !breakout)
-			sleep(-1)
-			if(((REALTIMEOFDAY - starttime2)/10) > 300)
-				breakout = 1
-			f >> ve
-		if(breakout)
-			message_admins("ATTENTION! ZLEVEL [z] HAD TO BREAKOUT AFTER 300 SECONDS!!")
-			message_admins("ATTENTION! ZLEVEL [z] HAD TO BREAKOUT AFTER 300 SECONDS!!")
-			message_admins("ATTENTION! ZLEVEL [z] HAD TO BREAKOUT AFTER 300 SECONDS!!")
-
-
+		f = new("map_saves/z[z].sav")
+		while(!f.eof)
+			from_file(f,ve)
 		message_admins("Loading Zlevel [z] Completed in [(REALTIMEOFDAY - starttime2)/10] seconds!")
-		f = null
+	
+	f = null
 	f = new("map_saves/extras.sav")
 	var/list/zones
 

@@ -53,8 +53,7 @@ Class Procs:
 
    auto_use_power()			'game/machinery/machine.dm'
 	  This proc determines how power mode power is deducted by the machine.
-	  'auto_use_power()' is called by the 'master_controller' game_controller every
-	  tick.
+	  'auto_use_power()' is called by the 'machines' subsystem every tick.
 
 	  Return Value:
 		 return:1 -- if object is powered
@@ -87,7 +86,7 @@ Class Procs:
 	  Called by machine to assign a value to the uid variable.
 
    process()				  'game/machinery/machine.dm'
-	  Called by the 'master_controller' once per game tick for each machine that is listed in the 'machines' list.
+	  Called by the 'machines' subsystem once per game tick for each machine that is listed in the 'machines' list.
 
 
 	Compiled by Aygar
@@ -116,6 +115,18 @@ Class Procs:
 	var/clicksound			// sound played on succesful interface use by a carbon lifeform
 	var/clickvol = 40		// sound played on succesful interface use
 	var/multiplier = 0
+
+
+	var/datum/world_faction/faction
+	var/faction_uid
+
+	layer = 2.9
+/obj/machinery/proc/can_connect(var/datum/world_faction/trying, var/mob/M)
+	return 1
+
+/obj/machinery/proc/can_disconnect(var/datum/world_faction/trying, var/mob/M)
+	return 1
+
 
 /obj/machinery/Initialize(mapload, d=0)
 	. = ..()

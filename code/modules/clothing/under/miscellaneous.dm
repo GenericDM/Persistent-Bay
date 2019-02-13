@@ -451,9 +451,9 @@
 /obj/item/clothing/under/dress/draculass
 	name = "sexy black coat"
 	desc = "A sexy black coat with a red blouse and lace."
-	icon_state = "geisha"
+	icon_state = "draculass"
 	item_state = "kilt"
-	worn_state = "geisha"
+	worn_state = "draculass"
 
 /obj/item/clothing/under/dress/ysing
 	name = "eastern dress"
@@ -589,7 +589,6 @@
 	icon_state = "charcoal_suit"
 	item_state = "bl_suit"
 	worn_state = "charcoal_suit"
-	starting_accessories = list(/obj/item/clothing/accessory/navy, /obj/item/clothing/accessory/toggleable/charcoal_jacket)
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -597,7 +596,6 @@
 	icon_state = "navy_suit"
 	item_state = "bl_suit"
 	worn_state = "navy_suit"
-	starting_accessories = list(/obj/item/clothing/accessory/red, /obj/item/clothing/accessory/toggleable/navy_jacket)
 
 /obj/item/clothing/under/suit_jacket/burgundy
 	name = "burgundy suit"
@@ -605,7 +603,6 @@
 	icon_state = "burgundy_suit"
 	item_state = "r_suit"
 	worn_state = "burgundy_suit"
-	starting_accessories = list(/obj/item/clothing/accessory/black, /obj/item/clothing/accessory/toggleable/burgundy_jacket)
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
@@ -613,7 +610,6 @@
 	icon_state = "checkered_suit"
 	item_state = "gy_suit"
 	worn_state = "checkered_suit"
-	starting_accessories = list(/obj/item/clothing/accessory/black, /obj/item/clothing/accessory/toggleable/checkered_jacket)
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
@@ -621,7 +617,6 @@
 	icon_state = "tan_suit"
 	item_state = "lb_suit"
 	worn_state = "tan_suit"
-	starting_accessories = list(/obj/item/clothing/accessory/yellow, /obj/item/clothing/accessory/toggleable/tan_jacket)
 
 /obj/item/clothing/under/serviceoveralls
 	name = "simple workers outfit"
@@ -787,49 +782,77 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
 /obj/item/clothing/under/shinypurple
-	name = "Shiny purple suit"
+	name = "shiny purple suit"
 	desc = "A shiny purple suit made of synthread. It has a flower pinned to it."
 	icon_state = "purpletux"
 	worn_state = "purpletux"
 
 /obj/item/clothing/under/blacktux
-	name = "Black Tuxedo"
+	name = "black tuxedo"
 	desc = "A shiny black suit made of synthread. It has a flower pinned to it."
 	icon_state = "blacktux"
-	worn_state = "blacktux"	
-	
+	worn_state = "blacktux"
+
 /obj/item/clothing/under/bouqet
-	name = "Bouqet"
+	name = "bouqet"
 	desc = "A shiny black suit made of synthread. It has a flower pinned to it."
 	icon_state = "bouqet"
 	item_state = "bouqet"
-	worn_state = "bouqet"		
-	
+	worn_state = "bouqet"
+
 /obj/item/clothing/under/maydress
-	name = "Special Wedding Dress"
+	name = "colorful wedding dress"
 	desc = "A beautiful gown specially ordered and tailored. Embroidered along the inside of the dress, in cursive, May Crystalia."
 	icon_state = "maydress"
 	worn_state = "maydress"
 
-/obj/item/clothing/under/tulledress
+/obj/item/clothing/under/koudress
+	name = "beautiful wedding dress"
+	desc = "A beautiful weddubg gown specially tailored with purple highlights."
+	icon_state = "koudress"
+	worn_state = "koudress"
+
+/obj/item/clothing/under/purpfrill
+	name = "purple fancy dress"
+	desc = "A fancy deep-purple dress."
+	icon_state = "purpfrill"
+	worn_state = "purpfrill"
+
+/obj/item/clothing/under/purpleweddingtux
+	name = "purple wedding tuxedo"
+	desc = "A tuxedo tailored for a wedding with purple detailing."
+	icon_state = "weddingtux"
+	worn_state = "weddingtux"
+
+
+/obj/item/clothing/under/weddingfrill
+	name = "green wedding dress"
+	desc = "A frilly green wedding dress."
+	icon_state = "weddingfrill"
+	worn_state = "weddingfrill"
+
+
+/obj/item/clothing/under/tulleddress
 	name = "Silk Dress"
 	desc = "A silk dress padded with tulle fabric. Sleek, modest, and beauty all in one article."
-	icon_state = "tulledress"
-	worn_state = "tulledress"
+	icon_state = "tulled_dress"
+	worn_state = "tulled_dress"
 
 /obj/item/clothing/under/bridesmaid
 	name = "Purple bridesmaid dress"
 	desc = "A form fitted bridesmaid dress made of purple silk. Really shows those curves."
 	icon_state = "purplemaid"
 	worn_state = "purplemaid"
-	
+
 /obj/item/clothing/under/greendress
 	name = "Green dress"
 	desc = "A green dress."
 	icon_state = "greendress"
 	worn_state = "greendress"
-		
-	
-	
-	
-	
+
+/obj/item/clothing/under/referee
+	name = "Referee Uniform"
+	desc = "A uniform for officiating sporting events."
+	item_state = "bl_suit"
+	icon_state = "referee"
+	worn_state = "referee"

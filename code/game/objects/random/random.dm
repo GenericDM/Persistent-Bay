@@ -184,7 +184,7 @@
 				/obj/item/weapon/storage/firstaid/o2 = 3,
 				/obj/item/weapon/storage/firstaid/adv = 2,
 				/obj/item/weapon/storage/firstaid/combat = 1,
-				/obj/item/weapon/storage/firstaid/empty = 2,
+				/obj/item/weapon/storage/firstaid = 2,
 				/obj/item/weapon/storage/firstaid/fire = 3)
 
 /obj/random/contraband
@@ -408,8 +408,8 @@
 obj/random/closet //A couple of random closets to spice up maint
 	name = "random closet"
 	desc = "This is a random closet."
-	icon = 'icons/obj/closet.dmi'
-	icon_state = "syndicate1"
+	icon = 'icons/obj/closets/bases/closet.dmi'
+	icon_state = "base"
 
 obj/random/closet/spawn_choices()
 	return list(/obj/structure/closet,
@@ -419,7 +419,7 @@ obj/random/closet/spawn_choices()
 				/obj/structure/closet/jcloset,
 				/obj/structure/closet/athletic_mixed,
 				/obj/structure/closet/toolcloset,
-				/obj/structure/closet/l3closet/general,
+				/obj/structure/closet/l3closet,
 				/obj/structure/closet/cabinet,
 				/obj/structure/closet/crate,
 				/obj/structure/closet/crate/freezer,
@@ -817,7 +817,7 @@ obj/random/obstruction/spawn_choices()
 
 /obj/random/clothing/spawn_choices()
 	return list(/obj/item/clothing/under/syndicate/tacticool = 2,
-				/obj/item/clothing/under/syndicate/combat = 1,
+				/obj/item/clothing/under/syndicate = 1,
 				/obj/item/clothing/under/hazard = 4,
 				/obj/item/clothing/under/sterile = 4,
 				/obj/item/clothing/under/casual_pants/camo = 2,

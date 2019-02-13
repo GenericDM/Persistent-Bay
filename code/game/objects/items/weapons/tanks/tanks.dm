@@ -14,7 +14,7 @@ var/list/global/tank_gauge_cache = list()
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_BACK
 	w_class = ITEM_SIZE_LARGE
-	matter = list(DEFAULT_WALL_MATERIAL = 1000)
+	matter = list(MATERIAL_STEEL = 1000)
 
 	force = 5.0
 	throwforce = 10.0
@@ -54,13 +54,15 @@ var/list/global/tank_gauge_cache = list()
 
 /obj/item/weapon/tank/Initialize()
 	. = ..()
-	proxyassembly = new /obj/item/device/tankassemblyproxy(src)
-	proxyassembly.tank = src
 
-	air_contents = new /datum/gas_mixture(volume, T20C)
-	for(var/gas in starting_pressure)
-		air_contents.adjust_gas(gas, starting_pressure[gas]*volume/(R_IDEAL_GAS_EQUATION*T20C), 0)
-	air_contents.update_values()
+	if(!map_storage_loaded)
+		proxyassembly = new /obj/item/device/tankassemblyproxy(src)
+		proxyassembly.tank = src
+
+		air_contents = new /datum/gas_mixture(volume, T20C)
+		for(var/gas in starting_pressure)
+			air_contents.adjust_gas(gas, starting_pressure[gas]*volume/(R_IDEAL_GAS_EQUATION*T20C), 0)
+		air_contents.update_values()
 
 	START_PROCESSING(SSobj, src)
 	update_icon(override = TRUE)
@@ -345,7 +347,7 @@ var/list/global/tank_gauge_cache = list()
 	if((atom_flags & ATOM_FLAG_INITIALIZED) && istype(loc, /obj/) && !istype(loc, /obj/item/clothing/suit/) && !override) //So we don't eat up our tick. Every tick, when we're not actually in play.
 		return
 	overlays.Cut()
-	if(proxyassembly.assembly || wired)
+	if((proxyassembly && proxyassembly.assembly) || wired)
 		overlays += image(icon,"bomb_assembly")
 		if(proxyassembly.assembly)
 			var/image/bombthing = image(proxyassembly.assembly.icon, proxyassembly.assembly.icon_state)
